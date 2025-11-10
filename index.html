@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard SAC - Atualizável</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen p-8">
+
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Relatório de Atendimento SAC</h1>
+    <button id="openModal" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-semibold">
+      Atualizar Dados
+    </button>
+  </div>
+
+  <!-- Cards principais -->
+  <div class="grid grid-cols-3 gap-6 mb-6">
+    <div class="bg-gray-800 p-4 rounded-2xl shadow-lg text-center">
+      <h2 class="text-lg font-semibold">Total Acionamentos (RA)</h2>
+      <p id="acionamentosRA" class="text-3xl font-bold mt-2">65</p>
+    </div>
+    <div class="bg-gray-800 p-4 rounded-2xl shadow-lg text-center">
+      <h2 class="text-lg font-semibold">Tempo Médio de Atendimento (TMA)</h2>
+      <p id="tma" class="text-3xl font-bold mt-2">05:14</p>
+    </div>
+    <div class="bg-gray-800 p-4 rounded-2xl shadow-lg text-center">
+      <h2 class="text-lg font-semibold">Taxa de Abandono</h2>
+      <p id="abandono" class="text-3xl font-bold mt-2">6%</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-6 mb-6">
+    <div class="bg-gray-800 p-4 rounded-2xl shadow-lg text-center">
+      <h2 class="text-lg font-semibold">Total Acionamentos (E-mail)</h2>
+      <p id="acionamentosOuvidoria" class="text-3xl font-bold mt-2">110</p>
+    </div>
+    <div class="bg-gray-800 p-4 rounded-2xl shadow-lg text-center">
+      <h2 class="text-lg font-semibold">Tempo Médio de Espera (TME)</h2>
+      <p id="tme" class="text-3xl font-bold mt-2">00:43</p>
+    </div>
+    <div class="bg-gray-800 p-4 rounded-2xl shadow-lg text-center">
+      <h2 class="text-lg font-semibold">Taxa de Resposta (SLA)</h2>
+      <p id="sla" class="text-3xl font-bold mt-2">100%</p>
+    </div>
+  </div>
+
+  <!-- Performance Reclame Aqui -->
+  <div class="bg-gray-800 p-6 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-2xl font-bold mb-4">Performance Reclame Aqui</h2>
+    <div class="grid grid-cols-5 gap-4 text-center">
+      <div>
+        <h3 class="font-semibold">Reclamações</h3>
+        <p id="reclamacoes" class="text-2xl font-bold">985</p>
+      </div>
+      <div>
+        <h3 class="font-semibold">% Respondidas</h3>
+        <p id="respondidas" class="text-2xl font-bold">100%</p>
+      </div>
+      <div>
+        <h3 class="font-semibold">% Solução</h3>
+        <p id="solucao" class="text-2xl font-bold">79.7%</p>
+      </div>
+      <div>
+        <h3 class="font-semibold">% Voltaria a Negociar</h3>
+        <p id="voltaria" class="text-2xl font-bold">50%</p>
+      </div>
+      <div>
+        <h3 class="font-semibold">Nota Final</h3>
+        <p id="notaFinal" class="text-2xl font-bold">7.0</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Satisfação -->
+  <div class="bg-gray-800 p-6 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-2xl font-bold mb-4">Satisfação</h2>
+    <p id="satisfacaoTotal" class="text-3xl font-bold mb-4">97%</p>
+    <div class="grid grid-cols-3 gap-2 text-center">
+      <p>Muito Feliz: <span id="muitoFeliz">29%</span></p>
+      <p>Feliz: <span id="feliz">19%</span></p>
+      <p>Neutro: <span id="neutro">13%</span></p>
+      <p>Extremamente Feliz: <span id="extremFeliz">12%</span></p>
+      <p>Infeliz: <span id="infeliz">12%</span></p>
+      <p>Extremamente Infeliz: <span id="extremInfeliz">11%</span></p>
+    </div>
+    <p class="text-center mt-4 text-gray-400">Nota Média: <span id="notaMedia">9.1</span> | Total de Pesquisas: <span id="totalPesquisas">345</span></p>
+  </div>
+
+  <!-- Modal de Edição -->
+  <div id="dataModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center">
+    <div class="bg-gray-800 p-6 rounded-2xl shadow-xl w-[90%] max-w-4xl">
+      <h2 class="text-2xl font-bold mb-4 text-center">Atualizar Dados do Dashboard</h2>
+      <div class="grid grid-cols-3 gap-4 mb-6">
+        <div>
+          <label>Total RA</label>
+          <input id="inputAcionamentosRA" class="w-full p-2 rounded bg-gray-700 text-white" />
+        </div>
+        <div>
+          <label>TMA</label>
+          <input id="inputTMA" class="w-full p-2 rounded bg-gray-700 text-white" />
+        </div>
+        <div>
+          <label>Abandono</label>
+          <input id="inputAbandono" class="w-full p-2 rounded bg-gray-700 text-white" />
+        </div>
+        <div>
+          <label>Ouvidoria</label>
+          <input id="inputOuvidoria" class="w-full p-2 rounded bg-gray-700 text-white" />
+        </div>
+        <div>
+          <label>TME</label>
+          <input id="inputTME" class="w-full p-2 rounded bg-gray-700 text-white" />
+        </div>
+        <div>
+          <label>SLA</label>
+          <input id="inputSLA" class="w-full p-2 rounded bg-gray-700 text-white" />
+        </div>
+      </div>
+
+      <h3 class="text-xl font-semibold mb-2">Performance Reclame Aqui</h3>
+      <div class="grid grid-cols-5 gap-2 mb-6">
+        <input id="inputReclamacoes" placeholder="Reclamações" class="p-2 rounded bg-gray-700 text-white" />
+        <input id="inputRespondidas" placeholder="% Respondidas" class="p-2 rounded bg-gray-700 text-white" />
+        <input id="inputSolucao" placeholder="% Solução" class="p-2 rounded bg-gray-700 text-white" />
+        <input id="inputVoltaria" placeholder="% Voltaria" class="p-2 rounded bg-gray-700 text-white" />
+        <input id="inputNotaFinal" placeholder="Nota Final" class="p-2 rounded bg-gray-700 text-white" />
+      </div>
+
+      <div class="flex justify-end gap-4">
+        <button id="closeModal" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg">Cancelar</button>
+        <button id="saveData" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('dataModal');
+    const openModal = document.getElementById('openModal');
+    const closeModal = document.getElementById('closeModal');
+    const saveData = document.getElementById('saveData');
+
+    openModal.onclick = () => modal.classList.remove('hidden');
+    closeModal.onclick = () => modal.classList.add('hidden');
+
+    saveData.onclick = () => {
+      // Atualiza valores no dashboard
+      document.getElementById('acionamentosRA').textContent = document.getElementById('inputAcionamentosRA').value;
+      document.getElementById('tma').textContent = document.getElementById('inputTMA').value;
+      document.getElementById('abandono').textContent = document.getElementById('inputAbandono').value;
+      document.getElementById('acionamentosOuvidoria').textContent = document.getElementById('inputOuvidoria').value;
+      document.getElementById('tme').textContent = document.getElementById('inputTME').value;
+      document.getElementById('sla').textContent = document.getElementById('inputSLA').value;
+      document.getElementById('reclamacoes').textContent = document.getElementById('inputReclamacoes').value;
+      document.getElementById('respondidas').textContent = document.getElementById('inputRespondidas').value;
+      document.getElementById('solucao').textContent = document.getElementById('inputSolucao').value;
+      document.getElementById('voltaria').textContent = document.getElementById('inputVoltaria').value;
+      document.getElementById('notaFinal').textContent = document.getElementById('inputNotaFinal').value;
+
+      modal.classList.add('hidden');
+    };
+  </script>
+</body>
+</html>
